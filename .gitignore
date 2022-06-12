@@ -30,7 +30,9 @@ eggs/
 .eggs/
 lib/
 Lib/
+/Lib
 Scripts/
+/Scripts
 lib64/
 parts/
 sdist/
