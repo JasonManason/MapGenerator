@@ -3,3 +3,16 @@ datasets/
 .env
 .flaskenv
 .idea
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+lib/
+scripts/
+pyvenv.cfg
