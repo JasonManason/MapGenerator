@@ -1,0 +1,227 @@
+{
+    "data": {
+        "big_tree0" : {
+            "nb_up" : ["big_tree2", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_down" : ["big_tree1"],
+            "nb_left" : ["big_tree0", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_right" : ["big_tree0", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"]
+        },
+        "big_tree1" : {
+            "nb_up" : ["big_tree0"],
+            "nb_down" : ["big_tree2"],
+            "nb_left" : ["big_tree1"],
+            "nb_right" : ["big_tree1"]
+
+        },
+        "big_tree2" : {
+            "nb_up" : ["big_tree1"],
+            "nb_down" : ["big_tree0", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_left" : ["big_tree1"],
+            "nb_right" : ["big_tree1"]
+
+        },
+        "flower" : {
+            "nb_up" : ["big_tree2", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_down" : ["big_tree0", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_left" : ["big_tree0", "big_tree1", "big_tree2", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_right" : ["big_tree0", "big_tree1", "big_tree2", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"]
+
+        },
+        "grass0" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree2", "path4", "path5", "path6"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "path3", "path7", "path8"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"]
+
+        },
+        "grass1" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree2", "path4", "path5", "path6"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "path3", "path7", "path8"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"]
+
+        },
+        "grass2" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree2", "path4", "path5", "path6"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "path3", "path7", "path8"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"]
+
+        },
+        "grass3" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree2", "path4", "path5", "path6"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "path3", "path7", "path8"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"]
+
+        },
+        "path0" : {
+            "nb_up" : ["path0", "path11", "path12"],
+            "nb_down" : ["path0", "path9", "path10"],
+            "nb_left" : ["path0", "path10", "path12"],
+            "nb_right" : ["path0", "path9", "path11"]
+
+        },
+        "path1" : {
+            "nb_up" : ["path1", "path7", "path9"],
+            "nb_down" : ["path1", "path5", "path12"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_right" : ["path0", "path2"]
+
+        },
+        "path2" : {
+            "nb_up" : ["path2", "path8", "path9"],
+            "nb_down" : ["path2", "path6", "path11"],
+            "nb_left" : ["path0", "path1"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"]
+
+        },
+        "path3" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_down" : ["path0", "path4"],
+            "nb_left" : ["path3", "path11", "path7"],
+            "nb_right" : ["path3", "path12", "path8"]
+
+        },
+        "path4" : {
+            "nb_up" : ["path0", "path3"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_left" : ["path4", "path5", "path9"],
+            "nb_right" : ["path4", "path6", "path10"]
+
+        },
+        "path5" : {
+            "nb_up" : ["path1", "path7", "path10"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_right" : ["path6", "path4", "path10"]
+
+        },
+        "path6" : {
+            "nb_up" : ["path2", "path8", "path9"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_left" : ["path4", "path5", "path9"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"]
+
+        },
+        "path7" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_down" : ["path1", "path5", "path12"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_right" : ["path3", "path8", "path12"]
+
+        },
+        "path8" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_down" : ["path2", "path6", "path11"],
+            "nb_left" : ["path3", "path7", "path11"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"]
+
+        },
+        "path9" : {
+            "nb_up" : ["path0", "path11", "path12"],
+            "nb_down" : ["path2", "path6", "path11"],
+            "nb_left" : ["path0", "path10", "path12"],
+            "nb_right" : ["path4", "path6", "path10"]
+
+        },
+        "path10" : {
+            "nb_up" : ["path0", "path11", " path12"],
+            "nb_down" : ["path1", "path5", "path12"],
+            "nb_left" : ["path4", "path5", "path9"],
+            "nb_right" : ["path0", "path9", "path11"]
+
+        },
+        "path11" : {
+            "nb_up" : ["path2", "path8", "path9"],
+            "nb_down" : ["path0", "path9", "path10"],
+            "nb_left" : ["path0", "path10", "path12"],
+            "nb_right" : ["path3", "path8", "path12"]
+
+        },
+        "path12" : {
+            "nb_up" : ["path1", "path7", "path10"],
+            "nb_down" : ["path0", "path9", "path10"],
+            "nb_left" : ["path3", "path7", "path11"],
+            "nb_right" : ["path0", "path9", "path11"]
+
+        },
+        "tall_grass" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree2", "path4", "path5", "path6"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "path3", "path7", "path8"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"]
+
+        },
+        "tree_cut" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree2", "path4", "path5", "path6"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "path3", "path7", "path8"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "big_tree0", "big_tree1", "big_tree2", "path4", "path5", "path6"]
+
+        },
+        "water0" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_down" : ["water3", "water6"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_right" : ["water1", "water2"]
+
+        },
+        "water1" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_down" : ["water4", "water7"],
+            "nb_left" : ["water0", "water1"],
+            "nb_right" : ["water1", "water2"]
+
+        },
+        "water2" : {
+            "nb_up" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_down" : ["water5", "water8"],
+            "nb_left" : ["water2", "water0"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3"]
+
+        },
+        "water3" : {
+            "nb_up" : ["water3", "water0"],
+            "nb_down" : ["water3", "water6"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_right" : ["water4", "water5"]
+
+        },
+        "water4" : {
+            "nb_up" : ["water4", "water1"],
+            "nb_down" : ["water4", "water7"],
+            "nb_left" : ["water4", "water3"],
+            "nb_right" : ["water4", "water5"]
+
+        },
+        "water5" : {
+            "nb_up" : ["water2", "water5"],
+            "nb_down" : ["water5", "water8"],
+            "nb_left" : ["water3", "water4"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3"]
+
+        },
+        "water6" : {
+            "nb_up" : ["water0", "water3"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_left" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_right" : ["water7", "water8"]
+
+        },
+        "water7" : {
+            "nb_up" : ["water1", "water4"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_left" : ["water6", "water7"],
+            "nb_right" : ["water7",  "water8"]
+
+        },
+        "water8" : {
+            "nb_up" : ["water2", "water5"],
+            "nb_down" : ["grass0", "grass1", "grass2", "grass3"],
+            "nb_left" : ["water6", "water7"],
+            "nb_right" : ["grass0", "grass1", "grass2", "grass3"]
+
+        }
+    }
+}
