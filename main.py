@@ -1,27 +1,28 @@
-import pygame, sys, json
+import pygame, sys, json, random
 from pygame.locals import *
 import map, tile
+from itertools import product
 
 
 class MapGenerator:
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.width, self.height = 400, 400
+        self.size = self.width, self.height = 320, 320
         
     def on_execute(self):
         pass
 
     def on_init(self):
         pygame.init()
-        self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self.display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self.FPS = 30
         self.FramePerSec = pygame.time.Clock()
-        self._running = True
+        self.running = True
  
     def on_event(self, event): #check if an event has occured
         if event.type == pygame.QUIT:
-            self._running = False
+            self.running = False
         
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
@@ -36,7 +37,16 @@ class MapGenerator:
         pass
 
     def on_render(self): # render to pygame window
-        pass
+        m = map.Map()
+        tiles = m.load_tileset() # list of tiles as strings
+        x_cors = [x for x in range(self.width) if x % 16 == 0]
+        y_cors = [y for y in range(self.height) if y % 16 == 0]
+        coords = list(product(x_cors, y_cors))
+
+        for c in coords:
+            self.display_surf.blit((pygame.image.load(f"tiles/{random.choice(tiles)}.png")), c)
+            pygame.display.update()
+
 
     def on_cleanup(self): # close game
         pygame.quit()
@@ -44,13 +54,15 @@ class MapGenerator:
  
     def on_execute(self): # initialize pygame and enter main loop
         if self.on_init() == False:
-            self._running = False
- 
-        while( self._running ):
+            self.running = False
+        
+        pygame.display.set_caption('MapGenerator')
+        self.on_render() # for now call it once, make sure to call this AFTER the first mouseclick and collapse from that location
+        while( self.running ):
             for event in pygame.event.get():
                 self.on_event(event)
             self.on_loop()
-            self.on_render() 
+            # self.on_render() 
             self.FramePerSec.tick(self.FPS)
         self.on_cleanup()
 
