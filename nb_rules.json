@@ -9,15 +9,15 @@
         "big_tree1" : {
             "nb_up" : ["big_tree0"],
             "nb_down" : ["big_tree2"],
-            "nb_left" : ["big_tree1"],
-            "nb_right" : ["big_tree1"]
+            "nb_left" : ["big_tree1", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_right" : ["big_tree1", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"]
 
         },
         "big_tree2" : {
             "nb_up" : ["big_tree1"],
             "nb_down" : ["big_tree0", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
-            "nb_left" : ["big_tree1"],
-            "nb_right" : ["big_tree1"]
+            "nb_left" : ["big_tree1", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"],
+            "nb_right" : ["big_tree1", "grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut"]
 
         },
         "flower" : {
