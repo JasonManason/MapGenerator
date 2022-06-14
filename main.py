@@ -52,45 +52,36 @@ class MapGenerator:
                 self.draw_tile(first_tile, x_y)
         
         self.collapse_further(m, t) # t = first tile
-        """Now collapse from there, first check if all sides are free, then recursive collapse??"""
-
+    
     def collapse_further(self, m, t):
+        """
+        Draws new tiles based on options from the original tile until the map is filled.
+        """
         count = 0
+        coords = t.get_coords() # upper left (x, y) of tile
+        usable_sides = t.get_usable_nbs(coords, m)
+        print("usable_sides\n\n", usable_sides, "\n\n")
+        direction = random.choice(list(usable_sides)) # random for now, will be based on weights
+        next_tile = random.choice(usable_sides[direction]) # random for now, will be based on weights
+        next = tile.Tile()
+        next.set_name(next_tile)
+        next.set_initial_nbs()
 
+        # set coords based on direction
+        if direction == "nb_up":
+            next.set_coords((coords[0], coords[1] - 16))
+        elif direction == "nb_down":
+            next.set_coords((coords[0], coords[1] + 16))
+        elif direction == "nb_left":
+            next.set_coords((coords[0] - 16, coords[1]))
+        else: # right
+            next.set_coords((coords[0] + 16, coords[1]))
+        
         while count < m.get_max_tiles():
-            coords = t.get_coords() # upper left (x, y) of tile
-            usable_sides = t.get_usable_nbs(coords, m)
-            print("usable_sides\n\n", usable_sides, "\n\n")
-            direction = random.choice(list(usable_sides)) # random for now, will be based on weights
-            next_tile = random.choice(usable_sides[direction]) # random for now, will be based on weights
-            next = tile.Tile()
-            next.set_name(next_tile)
-
-            # set coords based on direction
-            if direction == "nb_up":
-                next.set_coords((coords[0], coords[1] - 16))
-            elif direction == "nb_down":
-                next.set_coords((coords[0], coords[1] + 16))
-            elif direction == "nb_left":
-                next.set_coords((coords[0] - 16, coords[1]))
-            else: # right
-                next.set_coords((coords[0] + 16, coords[1]))
-
             self.draw_tile(next.name, next.coords)
+            self.collapse_further(m, next)
+            count += 1
 
-
-            # tile = current tile
-            # check corner/side
-            # choose random direction for now (-directionss if corner/side)
-            # remember placement upper/left corner for this tile
-            # choose random nb for now
-            # draw in place # draw_tile(<Tile Class>, (x, y))
-            # new tile = current tile
-            # count += 1
-            # repeat 
-
-            count += 1 # only count after nb is placed!!
-            pass
 
     def on_startup(self): # called once when the program starts
         # draw grid, explanation for user
