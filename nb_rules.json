@@ -222,6 +222,33 @@
             "nb_left" : ["water6", "water7"],
             "nb_right" : ["grass0", "grass1", "grass2", "grass3"]
 
+        },
+        "water9" : {
+            "nb_up" : ["water0", "water3"],
+            "nb_down" : ["water4", "water7"],
+            "nb_left" : ["water0", "water1"],
+            "nb_right" : ["water4", "water5"]
+
+        },
+        "water10" : {
+            "nb_up" : ["water2", "water5"],
+            "nb_down" : ["water4", "water7"],
+            "nb_left" : ["water3", "water4"],
+            "nb_right" : ["water1",  "water2"]
+
+        },
+        "water11" : {
+            "nb_up" : ["water1", "water4"],
+            "nb_down" : ["water5", "water8"],
+            "nb_left" : ["water3", "water4"],
+            "nb_right" : ["water7",  "water8"]
+
+        },
+        "water12" : {
+            "nb_up" : ["water1", "water4"],
+            "nb_down" : ["water3", "water6"],
+            "nb_left" : ["water6", "water7"],
+            "nb_right" : ["water4", "water5"]
         }
     }
 }

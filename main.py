@@ -39,11 +39,10 @@ class MapGenerator:
     def on_render(self): # render to pygame window
         m = map.Map()
         tiles = m.load_tileset() # list of tiles as strings
-        x_cors = [x for x in range(self.width) if x % 16 == 0]
-        y_cors = [y for y in range(self.height) if y % 16 == 0]
-        coords = list(product(x_cors, y_cors))
+        coords = [c for c in range(self.width) if c % 16 == 0]
+        coordinates = list(product(coords, coords))
 
-        for c in coords:
+        for c in coordinates:
             self.display_surf.blit((pygame.image.load(f"tiles/{random.choice(tiles)}.png")), c)
             pygame.display.update()
 
