@@ -59,8 +59,9 @@ class MapGenerator:
 
         while count < m.get_max_tiles():
             coords = t.get_coords() # upper left (x, y) of tile
-            t.get_usable_nbs(coords, m)        
-            # free_sides = t.get_useful_nbs(coords, m)
+            usable_sides = t.get_usable_nbs(coords, m)
+            print("usable_sides\n\n", usable_sides, "\n\n")
+
 
 
             # tile = current tile
