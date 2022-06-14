@@ -3,34 +3,67 @@ import pygame, json
 class Tile(pygame.sprite.Sprite): # https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite
     def __init__(self):
         super().__init__()
-        # self.rect = self.image.get_rect()
         self.clicked()
-    
-    def set_sprite(self, new_img): # set image via string
-        self.image = new_img
 
-    def get_nbs(self):
-        # get rest of info via string "name" and search in jsonfile, return a dict of nb info
+    def set_initial_nbs(self):
         file = open('nb_rules.json')
         data = json.load(file)
         file.close()
         for key, val in data["data"].items():
-            if key == self.image:
-                print(key, val)
+            if key == self.name:
                 self.nbs = (key, val)
-                return(key, val) # dict{}
+                return(key, val)
+
+    def set_nbs(self, nbs):
+        self.nbs = nbs
+
+    def get_nbs(self) -> dict:
+        return self.nbs
     
-    def clicked(self): # when set to true, user should not be able to click again
+    def set_name(self, name):
+        self.name = name
+    
+    def get_name(self) -> str:
+        return self.name
+
+    def get_usable_nbs(self, coords, m) -> dict:
+        """
+        Returns only the usable neigbours of a tile and leaves out the rest in case of a corner or side tile.
+        """
+        #Check vertical sides
+        nbs = self.get_nbs()
+        
+
+        if coords[0] == 0: # no left nbs
+            pass
+            if coords[1] == 0: # no left and up nbs // CORNER LEFT UP
+                pass
+            elif coords[1] == (m.height - 16): # no left and down nbs // CORNER LEFT DOWN
+                pass
+        elif coords[0] == (m.width - 16): # no right nbs
+            pass
+            if coords[1] == 0: # no right and up nb_rules // CORNER RIGHT UP
+                pass
+            elif coords[1] == (m.height - 16): # no right and down nb_rules // CORNER RIGHT DOWN
+                pass
+
+        # Check horizontal sides
+        elif coords[1] == 0: # no up nbs
+            pass
+        elif coords[1] == (m.height - 16): # no down nbs
+            pass
+        
+        # all sides are free
+        else:
+            print("not corner/side")
+            print(nbs)
+            return nbs
+    
+    def clicked(self) -> bool: # when set to true, user should not be able to click again
         self.clicked = True
 
-    def set_nbs(self, new_nbs):
-        self.nbs = new_nbs
+    def set_coords(self, coords): # Tuple
+        self.coords = coords
 
-
-    # def get_coords(self): # return upper left coordinates of tiles?
-    #     return self.coords
-
-    # def is_clicked(self):
-    #     return pygame.mouse.get_pressed()[0] and self.rect.collidepoint(pygame.mouse.get_pos())
-
-        
+    def get_coords(self) -> tuple:
+        return self.coords      
