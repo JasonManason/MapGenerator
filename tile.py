@@ -10,10 +10,6 @@ class Tile(pygame.sprite.Sprite): # https://www.pygame.org/docs/ref/sprite.html#
         data = json.load(file)
         self.nbs = data["data"]
         file.close()
-        # for key, val in data["data"].items():
-        #     if key == self.name:
-        #         #self.nbs = (key, val)
-        #         self.nbs = {key:val}
 
     def set_nbs(self, nbs):
         self.nbs = nbs

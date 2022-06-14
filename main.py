@@ -61,7 +61,22 @@ class MapGenerator:
             coords = t.get_coords() # upper left (x, y) of tile
             usable_sides = t.get_usable_nbs(coords, m)
             print("usable_sides\n\n", usable_sides, "\n\n")
+            direction = random.choice(list(usable_sides)) # random for now, will be based on weights
+            next_tile = random.choice(usable_sides[direction]) # random for now, will be based on weights
+            next = tile.Tile()
+            next.set_name(next_tile)
 
+            # set coords based on direction
+            if direction == "nb_up":
+                next.set_coords((coords[0], coords[1] - 16))
+            elif direction == "nb_down":
+                next.set_coords((coords[0], coords[1] + 16))
+            elif direction == "nb_left":
+                next.set_coords((coords[0] - 16, coords[1]))
+            else: # right
+                next.set_coords((coords[0] + 16, coords[1]))
+
+            self.draw_tile(next.name, next.coords)
 
 
             # tile = current tile
@@ -76,7 +91,6 @@ class MapGenerator:
 
             count += 1 # only count after nb is placed!!
             pass
-        pass
 
     def on_startup(self): # called once when the program starts
         # draw grid, explanation for user
