@@ -1,4 +1,4 @@
-import pygame, json, tile
+import pygame, json, tile, pandas
 
 class MapOfTiles(pygame.sprite.Group): # group of sprites: https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Group
     def __init__(self):
@@ -7,19 +7,35 @@ class MapOfTiles(pygame.sprite.Group): # group of sprites: https://www.pygame.or
         self.max_tiles = int((self.width / 16) * (self.height / 16))
         self.clicked = False
         self.occupied_tiles = []
-        self.free_tiles = []
+
+
+    def set_grid(self):
+        """Create a grid with numpy??? or even pandas!? so via cols and rows we can get: occupied, adjacent all sides, coords, image name"""
+        n_cols, n_rows = int((self.size[0] / 16)), int((self.size[0] / 16))
+        n_tiles = int(n_cols * n_rows)
+        # USE: numpy.meshgrid!! creates grid of coordinates for plotting?
+        pass
+
 
     def load_tileset(self) -> list[str]:
         file = open('nb_rules.json')
         data = json.load(file)
         file.close()
-        return [i for i in data["data"]] # eventually return different datatype to also get weights or maybe as different method?
+        self.tileset = [i for i in data["data"]]
+        return self.tileset # eventually return different datatype to also get weights or maybe as different method?
     
+
+    def get_tileset(self) -> list[str]:
+        return self.tileset
+
+
     def get_max_tiles(self) -> int:
         return self.max_tiles
 
+
     def set_size(self, size: tuple):
         self.size = size # give user choice for S, M, L sized map!
+
 
     def add_occupied_tiles(self, tile: tuple):
         """
@@ -27,8 +43,10 @@ class MapOfTiles(pygame.sprite.Group): # group of sprites: https://www.pygame.or
         """
         self.occupied_tiles.append(tile)
 
+
     def get_occupied_tiles(self) -> list:
         return self.occupied_tiles
+
 
     def check_if_taken(self, direction: str, t:tile, all_coords: list) -> bool:
         if direction == "nb_up":

@@ -8,12 +8,14 @@ class MapGenerator:
         self._display_surf = None
         self.size = self.width, self.height = 640, 640 # has to scale with user map size choice later
 
+
     def on_init(self):
         pygame.init()
         self.display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self.FPS = 30
         self.FramePerSec = pygame.time.Clock()
         self.running = True
+
  
     def on_event(self, event: pygame.event): # https://www.pygame.org/docs/ref/event.html
         if event.type == pygame.QUIT:
@@ -25,15 +27,16 @@ class MapGenerator:
             # first; check if first click was on a tile before blocking event
             pygame.event.set_blocked(pygame.MOUSEBUTTONUP) # disable mouseclick after first click to start collapse
 
-    def draw_tile(self, tile: tile, coords: tuple): # move to tile class?
+
+    def draw_tile(self, tile: tile, coords: tuple):
         self.display_surf.blit((pygame.image.load(f"tiles/{tile}.png")), coords)
         pygame.display.update()
     
+
     def start_collapse(self, pos: tuple): # mouse click will start collapse of tiles
         """
         Has user click a space where the first random tile spawns.
         """
-        print(pos)
         m = mapoftiles.MapOfTiles()
         tiles = m.load_tileset()
         coords = [c for c in range(self.width) if c % 16 == 0]
@@ -49,70 +52,50 @@ class MapGenerator:
             if rect_x_y.collidepoint(pos):
                 t.set_coords(x_y)
                 self.draw_tile(first_tile, x_y)
-        
-        self.collapse_further(m, t)
 
-    def collapse_further(self, m: mapoftiles, t: tile):
+        free_coords = [c for c in t.check_adjacency(t.coords, m)[0] if c not in m.get_occupied_tiles()]
+        print("free_coords in initial tile:\t\t", free_coords)
+        self.wave_collapse(m, t, free_coords) # test
+
+
+    def wave_collapse(self, m: mapoftiles, t: tile, free_coords: list): # test
         """
-        Draws new tiles based on options from the original tile until the map is filled.
+        Recursively collapses the wave further from the first clicked tile.
         """
-        coords = t.get_coords()
-        m.add_occupied_tiles(coords)
-        usable_sides = t.get_usable_nbs(coords, m)
-        direction = random.choice(list(usable_sides))
-        next_tile = random.choice(usable_sides[direction]) # random for now, will be based on weights
-        next = tile.Tile()
-        next.set_name(next_tile)
-        next.set_initial_nbs()
-        coords_up = (coords[0], coords[1] - 16)
-        coords_down = (coords[0], coords[1] + 16)
-        coords_left = (coords[0] - 16, coords[1])
-        coords_right = (coords[0] + 16, coords[1])
-        all_coords = [coords_up, coords_down, coords_left, coords_right]
-        #print("usable_sides:\t\t", usable_sides)
+        adjacent_coords, usable_sides = t.check_adjacency(t.get_coords(), m)
+        print("adjacent_coords: ", adjacent_coords, type(adjacent_coords))
+        print("usable_sides: ", usable_sides)
 
-        while m.check_if_taken(direction, t, all_coords): # True // While??
-            direction = t.get_new_direction(direction, usable_sides) # takes in current direction and picks a new one from usable sides?
-            # if there's no more usable sides, pick random free tile?
-            print("picking new direction")
-
-
-
-        """PLAN for checking if next tile free/taken"""
-        # function takes in (direction), returns bool
-        # while taken == true: call function that takes in (usable_sides, direction) and returns new usable_sides
-        # pick random direction from new_usable_sides (later based on weights)
-        # function takes in (direction), returns bool, if true repeat while loop, if false continue with current direction
-
-        # set coords based on direction // ADD next tile as active_nb to current tile!
-        #this can be a seperate function/ method??
-        if direction == "nb_up":
-            next.set_coords(coords_up)
-
-        elif direction == "nb_down":
-            next.set_coords(coords_down)
-
-        elif direction == "nb_left":
-            next.set_coords(coords_left)
-
-        else: # nb_right
-            next.set_coords(coords_right)
-        
-        while len(m.get_occupied_tiles()) < m.get_max_tiles():
+        for i, c in enumerate(free_coords):
+            next = "tile" + str(len(m.get_occupied_tiles()))
+            next = tile.Tile()
+            next.set_initial_nbs()
+            next.set_coords(c)
+            if adjacent_coords[i] == c:
+                img_name = random.choice(list(usable_sides.values())[i])
+            next.set_name(img_name)
+            print("name:\t\t", next.name)
+            self.draw_tile(next.name, next.coords)   
             m.add_occupied_tiles(next.coords)
-            self.draw_tile(next.name, next.coords)
-            self.collapse_further(m, next)
+            free_coords_next = [c for c in next.check_adjacency(next.coords, m)[0] if c not in m.get_occupied_tiles()]
+        
+        while (len(m.get_occupied_tiles())) < m.max_tiles:
+            self.wave_collapse(m, next, free_coords_next)
+
 
     def on_startup(self): # called once when the program starts
-        # draw grid, instructions for user
+        # draw grid => for loop with blocks 14x14ps and 1px line around them?
+        # #instructions for user
         # buttons / dropdown to choose map size / slider for slowmo?
         pass
 
-    def on_cleanup(self): # close window
+
+    def on_cleanup(self):
         pygame.quit()
         sys.exit()
  
-    def on_execute(self): # initialize pygame and enter main loop
+
+    def on_execute(self):
         if self.on_init() == False:
             self.running = False
         
