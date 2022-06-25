@@ -8,7 +8,7 @@ class MapGenerator:
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.width, self.height = 320, 320
+        self.size = self.width, self.height = 640, 640
         self.occupied_tiles = []
 
 
@@ -35,14 +35,14 @@ class MapGenerator:
         pygame.display.update()
        
 
-    def load_data(self):
+    def load_data(self) -> tuple:
         file = open('nb_rules.json')
         data = json.load(file)
         file.close()
         return data["data"], [i for i in data["data"]]
 
 
-    def set_pos_first_tile(self, t:tile, pos:tuple):
+    def set_pos_first_tile(self, t: tile, pos: tuple):
         """
             Sets the coordinates of the first tile to the correct position on the grid.
         """
@@ -68,7 +68,7 @@ class MapGenerator:
         return up, down, left, right
 
 
-    def create_grid(self, img_names:list):
+    def create_grid(self, img_names: list):
         """
             Creates a grid and fills every position with all possible tiles.
         """
@@ -76,7 +76,7 @@ class MapGenerator:
         self.grid.fill(img_names)
 
 
-    def update_grid(self, t:tile) -> tuple:
+    def update_grid(self, t: tile) -> tuple:
         """
             Changes the spot on the grid to the drawn tile and returns the indexes of the grid as a tuple.
         """
@@ -96,7 +96,7 @@ class MapGenerator:
             return (0, 0)
 
 
-    def update_grid_around_tile(self, t:tile, x: int, y: int):
+    def update_grid_around_tile(self, t: tile, x: int, y: int):
         """
             Changes the possible outcomes of tiles around the drawn tile.
         """
@@ -143,17 +143,73 @@ class MapGenerator:
             if len(self.grid[LEFT]) != 1: self.grid[LEFT] = t.valid_nbs_left
             if len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = t.valid_nbs_right
 
+    
+    def check_adjacency(self, x: int, y: int, data: dict) -> dict:
+        """
+            Checks if a tile is not on a border and checks if the coordinates already have neighbouring tiles. 
+            If so, the function returns the respective neighbours of those existing tiles as a dict.
+        """
+        step = 1
+        UP, DOWN, LEFT, RIGHT = (x, y - step), (x, y + step), (x - step, y), (x + step, y)
+        min, max = 0, int((self.width / IMG_SIZE) - 1)
+        all_nbs = {}
+
+        if x == min:
+            if y == min:
+                if len(self.grid[DOWN]) == 1: all_nbs["down"] = self.get_valid_nbs(self.grid[DOWN][0], data)[0]
+                if len(self.grid[RIGHT]) == 1: all_nbs["right"] = self.get_valid_nbs(self.grid[RIGHT][0], data)[2]
+
+            elif y == max:
+                if len(self.grid[UP]) == 1: all_nbs["up"] = self.get_valid_nbs(self.grid[UP][0], data)[1]
+                if len(self.grid[RIGHT]) == 1: all_nbs["right"] = self.get_valid_nbs(self.grid[RIGHT][0], data)[2]
+
+            else:
+                if len(self.grid[UP]) == 1: all_nbs["up"] = self.get_valid_nbs(self.grid[UP][0], data)[1]
+                if len(self.grid[DOWN]) == 1: all_nbs["down"] = self.get_valid_nbs(self.grid[DOWN][0], data)[0]
+                if len(self.grid[RIGHT]) == 1: all_nbs["right"] = self.get_valid_nbs(self.grid[RIGHT][0], data)[2]
+
+        elif x == max:
+            if y == min:
+                if len(self.grid[DOWN]) == 1: all_nbs["down"] = self.get_valid_nbs(self.grid[DOWN][0], data)[0]
+                if len(self.grid[RIGHT]) == 1: all_nbs["right"] = self.get_valid_nbs(self.grid[RIGHT][0], data)[2]
+
+            elif y == max:
+                if len(self.grid[UP]) == 1: all_nbs["up"] = self.get_valid_nbs(self.grid[UP][0], data)[1]
+                if len(self.grid[LEFT]) == 1: all_nbs["left"] = self.get_valid_nbs(self.grid[LEFT][0], data)[3]
+
+            else:
+                if len(self.grid[UP]) == 1: all_nbs["up"] = self.get_valid_nbs(self.grid[UP][0], data)[1]
+                if len(self.grid[DOWN]) == 1: all_nbs["down"] = self.get_valid_nbs(self.grid[DOWN][0], data)[0]
+                if len(self.grid[LEFT]) == 1: all_nbs["left"] = self.get_valid_nbs(self.grid[LEFT][0], data)[3]
+
+        elif y == min:
+            if len(self.grid[DOWN]) == 1: all_nbs["down"] = self.get_valid_nbs(self.grid[DOWN][0], data)[0]
+            if len(self.grid[LEFT]) == 1: all_nbs["left"] = self.get_valid_nbs(self.grid[LEFT][0], data)[3]
+            if len(self.grid[RIGHT]) == 1: all_nbs["right"] = self.get_valid_nbs(self.grid[RIGHT][0], data)[2]
+
+        elif y == max:
+            if len(self.grid[UP]) == 1: all_nbs["up"] = self.get_valid_nbs(self.grid[UP][0], data)[1]
+            if len(self.grid[LEFT]) == 1: all_nbs["left"] = self.get_valid_nbs(self.grid[LEFT][0], data)[3]
+            if len(self.grid[RIGHT]) == 1: all_nbs["right"] = self.get_valid_nbs(self.grid[RIGHT][0], data)[2]
+
+        else:
+            if len(self.grid[UP]) == 1: all_nbs["up"] = self.get_valid_nbs(self.grid[UP][0], data)[1]
+            if len(self.grid[DOWN]) == 1: all_nbs["down"] = self.get_valid_nbs(self.grid[DOWN][0], data)[0]
+            if len(self.grid[LEFT]) == 1: all_nbs["left"] = self.get_valid_nbs(self.grid[LEFT][0], data)[3]
+            if len(self.grid[RIGHT]) == 1: all_nbs["right"] = self.get_valid_nbs(self.grid[RIGHT][0], data)[2]
+
+        return all_nbs
 
 
     def get_min_entropy(self) -> tuple:
         """
-            Looks for the cells in the grid with the lowest entropy and returns the coordinates with the possible tiles.
+            Looks for the cells in the grid with the lowest entropy (meaning the least possible options) and returns the coordinates with the possible tiles.
         """
         options, coords = [], []
 
         for i, row in enumerate(self.grid):
             for j, elem in enumerate(row):
-                if len(elem) != 1 and len(elem) != 36: # 1=fully collapsed and 36=not adjacent to anything
+                if len(elem) != 1 and len(elem) != 36:
                     options.append(elem)
                     coords.append((i, j))
 
@@ -174,9 +230,11 @@ class MapGenerator:
         return True
 
 
-    def initialize_wfc(self, pos):
+    def initialize_wfc(self, pos: tuple):
         """
-            wfc = wave function collapse
+            Creates a tile object and draws its sprite in the clicked spot of the grid.
+            The spots around the first tile get uodated based on the tiles possible neighbours.
+            After this the rest of the wave function collapse gets called.
         """
         data, img_names = self.load_data()
         name = random.choice(img_names)
@@ -191,6 +249,24 @@ class MapGenerator:
         self.wave_function_collapse(data)
 
 
+    def find_common_option(self, options: list, adjacent_options: dict) -> str:
+        """
+            Looks for the common option(s) between all the directions and chooses a random one if there's more than one.
+            If not, it will return one or none.
+        """
+        all = [options]
+        for dir in adjacent_options.values():
+            all.append(dir)
+    
+        common = list(set.intersection(*[set(l) for l in all]))
+        print(common) 
+        if len(common) == 1:         
+            return common[0] 
+        elif common == []:
+            return None
+        return random.choice(common)
+        
+
     def wave_function_collapse(self, data: dict):
         """
             Checks if not fully collapsed and then picks a new position based on the lowest entropy (least amount of tile options).
@@ -200,14 +276,20 @@ class MapGenerator:
         while not self.is_fully_collapsed():
             options, (x, y) = self.get_min_entropy()
             if (x, y) not in self.occupied_tiles:
-                name = random.choice(options)
-                up, down, left, right = self.get_valid_nbs(name, data)
-                next = tile.Tile(name, IMG_SIZE, IMG_SIZE, up, down, left, right)
-                next.set_coords((int(x * 16), int(y * 16)))
-                self.occupied_tiles.append((x, y))
-                self.draw_tile(next)
-                self.update_grid(next)
-                self.update_grid_around_tile(next, x, y)
+                adjacent_options = self.check_adjacency(x, y, data)
+                name = self.find_common_option(options, adjacent_options)
+                if name != None:
+                    up, down, left, right = self.get_valid_nbs(name, data)
+                    next = tile.Tile(name, IMG_SIZE, IMG_SIZE, up, down, left, right)
+                    next.set_coords((int(x * 16), int(y * 16)))
+                    self.occupied_tiles.append((x, y))
+                    self.draw_tile(next)
+                    self.update_grid(next)
+                    self.update_grid_around_tile(next, x, y)
+                else:
+                    #self.wave_function_collapse(data) # maximum recursion depth exceeded
+                    pass
+            print(len(self.occupied_tiles))
 
         
     def on_startup(self):
