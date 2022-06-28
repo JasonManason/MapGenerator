@@ -8,7 +8,7 @@ class MapGenerator:
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.width, self.height = 640, 640
+        self.size = self.width, self.height = 320, 320 # 640, 640
         self.occupied_tiles = []
 
 
@@ -129,102 +129,102 @@ class MapGenerator:
         max = int((self.width / IMG_SIZE) - 1)
 
         if x == 0: # LEFT BORDER
-            if y == 0: # CORNER L/U              
+            if y == 0: # CORNER L/U
                 if len(self.grid[DOWN]) == self.data_len: self.grid[DOWN] = t.valid_nbs_down
-                elif len(self.grid[DOWN]) != 1 and len(self.grid[DOWN]) != self.data_len: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down) # first one rewritten
+                elif len(self.grid[DOWN]) != 1: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
                 if len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = t.valid_nbs_right
-                elif len(self.grid[RIGHT]) != 1 and len(self.grid[RIGHT]) != self.data_len: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right) 
+                elif len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right) 
                 if len(self.grid[RD]) == self.data_len: self.grid[RD] = t.valid_nbs_rd
-                elif len(self.grid[RD]) != 1 and len(self.grid[RD]) != self.data_len: self.grid[RD] = self.common_nb(self.grid[RD], t.valid_nbs_rd)
+                elif len(self.grid[RD]) != 1: self.grid[RD] = self.common_nb(self.grid[RD], t.valid_nbs_rd)
 
             elif y == max or y == max + 1: # CORNER L/D
                 if len(self.grid[UP]) != 1: self.grid[UP] = t.valid_nbs_up
-                elif len(self.grid[UP]) != 1 and len(self.grid[UP]) != self.data_len: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
+                elif len(self.grid[UP]) != 1: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
                 if len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = t.valid_nbs_right
-                elif len(self.grid[RIGHT]) != 1 and len(self.grid[RIGHT]) != self.data_len: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
+                elif len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
                 if len(self.grid[RU]) == self.data_len: self.grid[RU] = t.valid_nbs_ru
-                elif len(self.grid[RU]) != 1 and len(self.grid[RU]) != self.data_len: self.grid[RU] = self.common_nb(self.grid[RU], t.valid_nbs_ru)
+                elif len(self.grid[RU]) != 1: self.grid[RU] = self.common_nb(self.grid[RU], t.valid_nbs_ru)
 
             else:
                 if len(self.grid[UP]) != 1: self.grid[UP] = t.valid_nbs_up
-                elif len(self.grid[UP]) != 1 and len(self.grid[UP]) != self.data_len: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up)   
+                elif len(self.grid[UP]) != 1: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up)   
                 if len(self.grid[DOWN]) != 1: self.grid[DOWN] = t.valid_nbs_down
-                elif len(self.grid[DOWN]) != 1 and len(self.grid[DOWN]) != self.data_len: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
+                elif len(self.grid[DOWN]) != 1: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
                 if len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = t.valid_nbs_right
-                elif len(self.grid[RIGHT]) != 1 and len(self.grid[RIGHT]) != self.data_len: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
+                elif len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
                 if len(self.grid[RU]) == self.data_len: self.grid[RU] = t.valid_nbs_ru
-                elif len(self.grid[RU]) != 1 and len(self.grid[RU]) != self.data_len: self.grid[RU] = self.common_nb(self.grid[RU], t.valid_nbs_ru)              
+                elif len(self.grid[RU]) != 1: self.grid[RU] = self.common_nb(self.grid[RU], t.valid_nbs_ru)              
                 if len(self.grid[RD]) == self.data_len: self.grid[RD] = t.valid_nbs_rd
-                elif len(self.grid[RD]) != 1 and len(self.grid[RD]) != self.data_len: self.grid[RD] = self.common_nb(self.grid[RD], t.valid_nbs_rd)
+                elif len(self.grid[RD]) != 1: self.grid[RD] = self.common_nb(self.grid[RD], t.valid_nbs_rd)
 
         elif x == max: # RIGHT BORDER
             if y == 0: # CORNER R/U
                 if len(self.grid[DOWN]) != 1: self.grid[DOWN] = t.valid_nbs_down
-                elif len(self.grid[DOWN]) != 1 and len(self.grid[DOWN]) != self.data_len: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
+                elif len(self.grid[DOWN]) != 1: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
                 if len(self.grid[LEFT]) != 1: self.grid[LEFT] = t.valid_nbs_left
-                elif len(self.grid[LEFT]) != 1 and len(self.grid[LEFT]) != self.data_len: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
+                elif len(self.grid[LEFT]) != 1: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
                 if len(self.grid[LD]) == self.data_len: self.grid[LD] = t.valid_nbs_ld
-                elif len(self.grid[LD]) != 1 and len(self.grid[LD]) != self.data_len: self.grid[LD] = self.common_nb(self.grid[LD], t.valid_nbs_ld)
+                elif len(self.grid[LD]) != 1: self.grid[LD] = self.common_nb(self.grid[LD], t.valid_nbs_ld)
             elif y == max or y == max + 1: # CORNER R/D
                 if len(self.grid[UP]) != 1: self.grid[UP] = t.valid_nbs_up
-                elif len(self.grid[UP]) != 1 and len(self.grid[UP]) != self.data_len: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
+                elif len(self.grid[UP]) != 1: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
                 if len(self.grid[LEFT]) != 1: self.grid[LEFT] = t.valid_nbs_left
-                elif len(self.grid[LEFT]) != 1 and len(self.grid[LEFT]) != self.data_len: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
+                elif len(self.grid[LEFT]) != 1: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
                 if len(self.grid[LU]) == self.data_len: self.grid[LU] = t.valid_nbs_lu
-                elif len(self.grid[LU]) != 1 and len(self.grid[LU]) != self.data_len: self.grid[LU] = self.common_nb(self.grid[LU], t.valid_nbs_lu)
+                elif len(self.grid[LU]) != 1: self.grid[LU] = self.common_nb(self.grid[LU], t.valid_nbs_lu)
             else:
                 if len(self.grid[UP]) != 1: self.grid[UP] = t.valid_nbs_up
-                elif len(self.grid[UP]) != 1 and len(self.grid[UP]) != self.data_len: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
+                elif len(self.grid[UP]) != 1: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
                 if len(self.grid[DOWN]) != 1: self.grid[DOWN] = t.valid_nbs_down
-                elif len(self.grid[DOWN]) != 1 and len(self.grid[DOWN]) != self.data_len: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
+                elif len(self.grid[DOWN]) != 1: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
                 if len(self.grid[LEFT]) != 1: self.grid[LEFT] = t.valid_nbs_left
-                elif len(self.grid[LEFT]) != 1 and len(self.grid[LEFT]) != self.data_len: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
+                elif len(self.grid[LEFT]) != 1: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
                 if len(self.grid[LU]) == self.data_len: self.grid[LU] = t.valid_nbs_lu
-                elif len(self.grid[LU]) != 1 and len(self.grid[LU]) != self.data_len: self.grid[LU] = self.common_nb(self.grid[LU], t.valid_nbs_lu)
+                elif len(self.grid[LU]) != 1: self.grid[LU] = self.common_nb(self.grid[LU], t.valid_nbs_lu)
                 if len(self.grid[LD]) == self.data_len: self.grid[LD] = t.valid_nbs_ld
-                elif len(self.grid[LD]) != 1 and len(self.grid[LD]) != self.data_len: self.grid[LD] = self.common_nb(self.grid[LD], t.valid_nbs_ld)
+                elif len(self.grid[LD]) != 1: self.grid[LD] = self.common_nb(self.grid[LD], t.valid_nbs_ld)
 
         elif y == 0: # UPPER BORDER
             if len(self.grid[DOWN]) != 1: self.grid[DOWN] = t.valid_nbs_down
-            elif len(self.grid[DOWN]) != 1 and len(self.grid[DOWN]) != self.data_len: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
+            elif len(self.grid[DOWN]) != 1: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
             if len(self.grid[LEFT]) != 1: self.grid[LEFT] = t.valid_nbs_left
-            elif len(self.grid[LEFT]) != 1 and len(self.grid[LEFT]) != self.data_len: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
+            elif len(self.grid[LEFT]) != 1: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
             if len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = t.valid_nbs_right
-            elif len(self.grid[RIGHT]) != 1 and len(self.grid[RIGHT]) != self.data_len: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
+            elif len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
             if len(self.grid[LD]) == self.data_len: self.grid[LD] = t.valid_nbs_ld
-            elif len(self.grid[LD]) != 1 and len(self.grid[LD]) != self.data_len: self.grid[LD] = self.common_nb(self.grid[LD], t.valid_nbs_ld)
+            elif len(self.grid[LD]) != 1: self.grid[LD] = self.common_nb(self.grid[LD], t.valid_nbs_ld)
             if len(self.grid[RD]) == self.data_len: self.grid[RD] = t.valid_nbs_rd
-            elif len(self.grid[RD]) != 1 and len(self.grid[RD]) != self.data_len: self.grid[RD] = self.common_nb(self.grid[RD], t.valid_nbs_rd)
+            elif len(self.grid[RD]) != 1: self.grid[RD] = self.common_nb(self.grid[RD], t.valid_nbs_rd)
 
         elif y == max or y == max + 1: # BOTTOM BORDER
             if len(self.grid[UP]) != 1: self.grid[UP] = t.valid_nbs_up
-            elif len(self.grid[UP]) != 1 and len(self.grid[UP]) != self.data_len: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
+            elif len(self.grid[UP]) != 1: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
             if len(self.grid[LEFT]) != 1: self.grid[LEFT] = t.valid_nbs_left
-            elif len(self.grid[LEFT]) != 1 and len(self.grid[LEFT]) != self.data_len: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
+            elif len(self.grid[LEFT]) != 1: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
             if len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = t.valid_nbs_right
-            elif len(self.grid[RIGHT]) != 1 and len(self.grid[RIGHT]) != self.data_len: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
+            elif len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
             if len(self.grid[LU]) == self.data_len: self.grid[LU] = t.valid_nbs_lu
-            elif len(self.grid[LU]) != 1 and len(self.grid[LU]) != self.data_len: self.grid[LU] = self.common_nb(self.grid[LU], t.valid_nbs_lu)
+            elif len(self.grid[LU]) != 1: self.grid[LU] = self.common_nb(self.grid[LU], t.valid_nbs_lu)
             if len(self.grid[RU]) == self.data_len: self.grid[RU] = t.valid_nbs_ru
-            elif len(self.grid[RU]) != 1 and len(self.grid[RU]) != self.data_len: self.grid[RU] = self.common_nb(self.grid[RU], t.valid_nbs_ru)
+            elif len(self.grid[RU]) != 1: self.grid[RU] = self.common_nb(self.grid[RU], t.valid_nbs_ru)
 
         else: # ALL SIDES ARE FREE
             if len(self.grid[UP]) != 1: self.grid[UP] = t.valid_nbs_up
-            elif len(self.grid[UP]) != 1 and len(self.grid[UP]) != self.data_len: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
+            elif len(self.grid[UP]) != 1: self.grid[UP] = self.common_nb(self.grid[UP], t.valid_nbs_up) 
             if len(self.grid[DOWN]) != 1: self.grid[DOWN] = t.valid_nbs_down
-            elif len(self.grid[DOWN]) != 1 and len(self.grid[DOWN]) != self.data_len: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
+            elif len(self.grid[DOWN]) != 1: self.grid[DOWN] = self.common_nb(self.grid[DOWN], t.valid_nbs_down)
             if len(self.grid[LEFT]) != 1: self.grid[LEFT] = t.valid_nbs_left
-            elif len(self.grid[LEFT]) != 1 and len(self.grid[LEFT]) != self.data_len: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
+            elif len(self.grid[LEFT]) != 1: self.grid[LEFT] = self.common_nb(self.grid[LEFT], t.valid_nbs_left) 
             if len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = t.valid_nbs_right
-            elif len(self.grid[RIGHT]) != 1 and len(self.grid[RIGHT]) != self.data_len: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
+            elif len(self.grid[RIGHT]) != 1: self.grid[RIGHT] = self.common_nb(self.grid[RIGHT], t.valid_nbs_right)
             if len(self.grid[LU]) == self.data_len: self.grid[LU] = t.valid_nbs_lu
-            elif len(self.grid[LU]) != 1 and len(self.grid[LU]) != self.data_len: self.grid[LU] = self.common_nb(self.grid[LU], t.valid_nbs_lu)
+            elif len(self.grid[LU]) != 1: self.grid[LU] = self.common_nb(self.grid[LU], t.valid_nbs_lu)
             if len(self.grid[RU]) == self.data_len: self.grid[RU] = t.valid_nbs_ru
-            elif len(self.grid[RU]) != 1 and len(self.grid[RU]) != self.data_len: self.grid[RU] = self.common_nb(self.grid[RU], t.valid_nbs_ru)
+            elif len(self.grid[RU]) != 1: self.grid[RU] = self.common_nb(self.grid[RU], t.valid_nbs_ru)
             if len(self.grid[LD]) == self.data_len: self.grid[LD] = t.valid_nbs_ld
-            elif len(self.grid[LD]) != 1 and len(self.grid[LD]) != self.data_len: self.grid[LD] = self.common_nb(self.grid[LD], t.valid_nbs_ld)
+            elif len(self.grid[LD]) != 1: self.grid[LD] = self.common_nb(self.grid[LD], t.valid_nbs_ld)
             if len(self.grid[RD]) == self.data_len: self.grid[RD] = t.valid_nbs_rd
-            elif len(self.grid[RD]) != 1 and len(self.grid[RD]) != self.data_len: self.grid[RD] = self.common_nb(self.grid[RD], t.valid_nbs_rd)
+            elif len(self.grid[RD]) != 1: self.grid[RD] = self.common_nb(self.grid[RD], t.valid_nbs_rd)
 
     
     def check_adjacency(self, x: int, y: int, data: dict) -> dict:
@@ -310,7 +310,7 @@ class MapGenerator:
 
         for i, row in enumerate(self.grid):
             for j, elem in enumerate(row):
-                if len(elem) != 1 and len(elem) != self.data_len:
+                if len(elem) != 1 and len(elem) != self.data_len and elem != []:
                     options.append(elem)
                     coords.append((i, j))
 
@@ -326,7 +326,7 @@ class MapGenerator:
             If not, it will return one or none.
         """
         common = []
-        all = [list(dir) for dir in adjacent_options.values()]      
+        all = [list(dir) for dir in adjacent_options.values()]
         flattened = [l for ll in all for l in ll]
 
         for elem in flattened:
@@ -347,6 +347,16 @@ class MapGenerator:
                 if(len(elem) > 1):
                     return False
         return True
+
+    def reset(self, data: dict):
+        """
+            Resets the grid if a tile has collapsed to 0 options.
+        """
+        img_names = [i for i in data]
+        print(img_names)
+        self.create_grid(img_names)
+        self.occupied_tiles = []
+        self.display_surf.fill(0, 0, 0)
 
 
     def initialize_wfc(self, pos: tuple):
@@ -375,12 +385,18 @@ class MapGenerator:
             The grid gets updated and the process repeats until the wave is fully collapsed (the len of all options in the grid is equal to 1).
         """
         while not self.is_fully_collapsed():
-        #for i in range(100):
+        #for i in range(200):
             options, (x, y) = self.get_min_entropy()
             if (x, y) not in self.occupied_tiles:         
                 adjacent_options = self.check_adjacency(x, y, data)
                 name = self.find_common_option(options, adjacent_options)
+
+
                 if name != None:
+
+                    print((x, y))
+                    print(name)
+
                     up, down, left, right, lu, ru, ld, rd = self.get_valid_nbs(name, data)
                     next = tile.Tile(name, IMG_SIZE, IMG_SIZE, up, down, left, right, lu, ru, ld, rd)
                     next.set_coords((int(x * 16), int(y * 16)))
@@ -388,10 +404,13 @@ class MapGenerator:
                     self.draw_tile(next)
                     self.update_grid(next)
                     self.update_grid_around_tile(next, x, y)
-                else:
-                    # backtrack?
+                else:                    
+                    print("no common options left, resetting:")
+                    #self.reset(data)
                     #self.wave_function_collapse(data) # maximum recursion depth exceeded
                     pass
+
+                print(len(self.occupied_tiles))
 
         
     def on_startup(self):

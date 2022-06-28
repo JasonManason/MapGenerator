@@ -27,7 +27,7 @@ class Tile(pygame.sprite.Sprite):
 
     def set_nbs(self):
         self.nbs = [self.valid_nbs_up, self.valid_nbs_down, self.valid_nbs_left, self.valid_nbs_right, \
-            self.valid_nbs_diag_lu, self.valid_nbs_diag_ru, self.valid_nbs_diag_ld, self.valid_nbs_diag_rd]
+            self.valid_nbs_lu, self.valid_nbs_ru, self.valid_nbs_ld, self.valid_nbs_rd]
 
 
     def get_nbs(self) -> list:
