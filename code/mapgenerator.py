@@ -66,8 +66,10 @@ class MapGenerator:
         :param data_len: The amount of (key)items in the file
         :return: The json file as a dict and a list of the key items from data, together as a tuple
         """
+        rand = random.random()
+        if rand <= 0.2:
+            file = open('Data/nb_rules_with_easter_egg.json')
         file = open('Data/nb_rules.json')
-        #file = open('Data/nb_rules_with_easter_egg.json')
         data = json.load(file)
         file.close()
         self.data_len = len(data["data"])
