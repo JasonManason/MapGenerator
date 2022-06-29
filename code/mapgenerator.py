@@ -4,7 +4,17 @@ from itertools import product
 IMG_SIZE = 16
 
 class MapGenerator:
+    """
+    The entire bitmap generator as a class.
+    """
     def __init__(self):
+        """
+        Construct a new 'MapGenerator' object.
+        :param running: The running state of the program
+        :param display_surf: The screen surface of Pygame
+        :param size: The size of the screen
+        :param occupied_tiles: A list which contains occupied tiles
+        """
         self._running = True
         self._display_surf = None
         self.size = self.width, self.height = 320, 320
@@ -13,7 +23,7 @@ class MapGenerator:
 
     def on_init(self):
         """
-            Gets called once at the start of the program to initialize the display surface, the FPS and sets the program to a running state.
+        Gets called once at the start of the program to initialize the display surface, the FPS and sets the program to a running state.
         """
         pygame.init()
         self.display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
@@ -24,9 +34,10 @@ class MapGenerator:
 
     def on_event(self, event: pygame.event):
         """
-            Checks for the occurence of events.
-            If the window closed, the program stops running.
-            If the user clicked somewhere in the frame, the wave function collapse starts, then the event gets blocked.
+        Checks for the occurence of events.
+        If the window closed, the program stops running.
+        If the user clicked somewhere in the frame, the wave function collapse starts, then the event gets blocked.
+        :param event: An event type from Pygame
         """
         if event.type == pygame.QUIT:
             self.running = False
@@ -39,7 +50,8 @@ class MapGenerator:
 
     def draw_tile(self, t: tile):
         """
-            Takes in a tile object and draws its image at its given coordinates.
+        Takes in a tile object and draws its image at its given coordinates.
+        :param t: A tile object
         """
         self.display_surf.blit((pygame.image.load(f"tiles/{t.img_name}.png")), t.coords)
         pygame.display.update()
@@ -47,8 +59,12 @@ class MapGenerator:
 
     def load_data(self) -> tuple:
         """
-            Loads in a json file with tilenames and their adjacency rules.
-            Then it returns a tuple with the names as a list and the entire json file as a dict.
+        Loads in a json file with tilenames and their adjacency rules.
+        Then it returns a tuple with the names as a list and the entire json file as a dict.
+        :param file: The opened json file
+        :param data: The loaded json file
+        :param data_len: The amount of (key)items in the file
+        :return: The json file as a dict and a list of the key items from data, together as a tuple
         """
         file = open('nb_rules.json')
         data = json.load(file)
@@ -59,7 +75,9 @@ class MapGenerator:
 
     def set_pos_first_tile(self, t: tile, pos: tuple):
         """
-            Sets the coordinates of the first tile to the correct position on the grid.
+        Sets the coordinates of the first tile to the correct position on the grid.
+        :param t: A tile object to set
+        :param pos: A tuple of coordinates, specifically the coordinates clicked by the mouse
         """
         coords = [c for c in range(self.width) if c % 16 == 0]
         coordinates = list(product(coords, coords))
@@ -73,19 +91,23 @@ class MapGenerator:
 
     def get_valid_nbs(self, name: str, data: dict) -> list:
         """
-            Returns a nested list of all valid neighbours of a given tile.
+        Returns a nested list of all valid neighbours of a given tile.
+        :param name: The name of the tile
+        :param data: The jsonfile as a dictionary
+        :return: The valid neighbours of the given tile
         """
         up, down, left, right, diag_lu, diag_ru, diag_ld, diag_rd = [], [], [], [], [], [], [], []
         for i in data:
             if i == name:
                 up, down, left, right, diag_lu, diag_ru, diag_ld, diag_rd = list(data[i].values())
 
-        return up, down, left, right, diag_lu, diag_ru, diag_ld, diag_rd
+        return [up, down, left, right, diag_lu, diag_ru, diag_ld, diag_rd]
 
 
     def create_grid(self, img_names: list):
         """
-            Creates a grid and fills every position with all possible tiles.
+        Creates a grid and fills every position with all possible tiles.
+        :param img_names: A list of image names
         """
         self.grid = np.ndarray((int(self.width / IMG_SIZE), int(self.height / IMG_SIZE)), dtype=list)
         self.grid.fill(img_names)
@@ -93,7 +115,9 @@ class MapGenerator:
 
     def update_grid(self, t: tile) -> tuple:
         """
-            Changes the spot on the grid to the drawn tile and returns the indexes of the grid as a tuple.
+        Changes the spot on the grid to the drawn tile and returns the indexes of the grid as a tuple.
+        :param t: A tile object
+        :return: The coordinates for the first tile, so that it gets placed correctly on the grid, not on the exact clicking position.
         """
         x, y = t.coords
         step = IMG_SIZE
@@ -110,17 +134,24 @@ class MapGenerator:
             self.grid[0][0] = [t.img_name]
             return (0, 0)
 
+
     def common_nb(self, old: list, new: list) -> list:
         """
-            Finds the common element between two lists of possible neighbours in order to remove the impossible tile options.
+        Finds the common element between two lists of possible neighbours in order to remove the impossible tile options.
+        :param old: A list of all the current possible images for a cell.
+        :param new: A list of the new possible images for a cell, based on a newly placed tile with its neighbours.
+        :return: A list of the common element(s) between the two lists
         """
-        return list(set(old).intersection(new))
+        return sorted(list(set(old).intersection(new)))
 
 
     def update_grid_around_tile(self, t: tile, x: int, y: int):
         """
-            Checks if a given tile is not in a corner or bottom spot and changes the possible neighbours accordingly,
-            unless a neighbouring tile is already collapsed.
+        Checks if a given tile is not in a corner or bottom spot and changes the possible neighbours accordingly,
+        unless a neighbouring tile is already collapsed.
+        :param t: A tile object 
+        :param x: The x coordinate
+        :param y: The y coordinate
         """
         step = 1
         UP, DOWN, LEFT, RIGHT = (x, y - step), (x, y + step), (x - step, y), (x + step, y)
@@ -228,9 +259,13 @@ class MapGenerator:
     
     def check_adjacency(self, x: int, y: int, data: dict) -> dict:
         """
-            Checks if a tile is not on a border and checks if the coordinates already have neighbouring tiles. 
-            If so, the function returns the respective neighbours of those existing tiles as a dict.
-            So if a tile on the left is collapsed, the left tile returns its possible right neighbours.
+        Checks if a tile is not on a border and checks if the coordinates already have neighbouring tiles. 
+        If so, the function returns the respective neighbours of those existing tiles as a dict.
+        So if a tile on the left is collapsed, the left tile returns its possible right neighbours.
+        :param x: The x coordinate
+        :param y: The y coordinate
+        :param y: A dictionary of the json file
+        :return: A new dictionary with the adjusted adjacent neighbours for the tile with coordinates (x, y)
         """
         step = 1
         UP, DOWN, LEFT, RIGHT = (x, y - step), (x, y + step), (x - step, y), (x + step, y)
@@ -303,7 +338,8 @@ class MapGenerator:
 
     def get_min_entropy(self) -> tuple:
         """
-            Looks for the cells in the grid with the lowest entropy (meaning the least possible options) and returns the coordinates with the possible tiles.
+        Looks for the cells in the grid with the lowest entropy (meaning the least possible options) and returns the coordinates with the possible tiles.
+        :return: The name of the next tile object to draw and its coordinates
         """
         options, coords = [], []
 
@@ -321,8 +357,11 @@ class MapGenerator:
 
     def find_common_option(self, options: list, adjacent_options: dict) -> str:
         """
-            Looks for the common option(s) between all the directions and chooses a random one if there's more than one.
-            If not, it will return one or none.
+        Looks for the common option(s) between all the directions and chooses a random one if there's more than one.
+        If not, it will return one or none.
+        :param options: A list of current image options for a tile
+        :param adjacent_options: All the new image options based on the adjacency of the tile
+        :return: The name of the next image to draw
         """
         common = []
         all = [list(dir) for dir in adjacent_options.values()]
@@ -340,7 +379,8 @@ class MapGenerator:
 
     def is_fully_collapsed(self) -> bool:
         """
-            Checks if the wfc is fully collapsed by checking if any of the cells in the grid have more than 1 options.
+        Checks if the wfc is fully collapsed by checking if any of the cells in the grid have more than 1 options.
+        :return: If the wave has collapsed or not, as a bool
         """
         for row in self.grid:
             for elem in row:
@@ -351,7 +391,7 @@ class MapGenerator:
 
     def reset(self, data: dict):
         """
-            Resets the grid if a tile has collapsed to 0 options.
+        Resets the grid if a tile has collapsed to 0 options.
         """
         img_names = [i for i in data]
         print(img_names)
@@ -362,9 +402,10 @@ class MapGenerator:
 
     def initialize_wfc(self, pos: tuple):
         """
-            Creates a tile object and draws its sprite in the clicked spot of the grid.
-            The spots around the first tile get uodated based on the tiles possible neighbours.
-            After this the rest of the wave function collapse gets called.
+        Creates a tile object and draws its sprite in the clicked spot of the grid.
+        The spots around the first tile get uodated based on the tiles possible neighbours.
+        After this the rest of the wave function collapse gets called.
+        :param pos: The coordinates of the cell where the user has clicked
         """
         data, img_names = self.load_data()
         name = random.choice(img_names)
@@ -381,9 +422,10 @@ class MapGenerator:
 
     def wave_function_collapse(self, data: dict):
         """
-            Checks if not fully collapsed and then picks a new position based on the lowest entropy (least amount of tile options).
-            Then a new tile object gets created and drawn in that spot.
-            The grid gets updated and the process repeats until the wave is fully collapsed (the len of all options in the grid is equal to 1).
+        Checks if not fully collapsed and then picks a new position based on the lowest entropy (least amount of tile options).
+        Then a new tile object gets created and drawn in that spot.
+        The grid gets updated and the process repeats until the wave is fully collapsed (the len of all options in the grid is equal to 1).
+        :param data: The json file as a dictionary
         """
         n_tiles = int((self.width / 16) * (self.height / 16))
         tiles_without_common = 0
@@ -416,20 +458,23 @@ class MapGenerator:
 
 
     def on_cleanup(self):
+        """
+        Gets called when the window gets closed.
+        """
         pygame.quit()
         sys.exit()
  
 
     def on_execute(self):
         """
-            Gets called after creation of the MapGenerator object to run the program.
-            Repeatedly checks if the program is still running and if so, it repeatedly checks for events once per frame.
+        Gets called after creation of the MapGenerator object to run the program.
+        Repeatedly checks if the program is still running and if so, it repeatedly checks for events once per frame.
         """
         if self.on_init() == False:
             self.running = False
         
         pygame.display.set_caption('MapGenerator')
-        while(self.running ):
+        while(self.running):
             for event in pygame.event.get():
                 self.on_event(event)
             self.FramePerSec.tick(self.FPS)
