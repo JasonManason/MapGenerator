@@ -1,4 +1,4 @@
-import pygame, sys, random, tile, json, numpy as np
+import pygame, sys, json, random, code.tile as tile, numpy as np
 from pygame.locals import *
 from itertools import product
 IMG_SIZE = 16

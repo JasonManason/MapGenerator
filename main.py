@@ -1,4 +1,4 @@
-from mapgenerator import MapGenerator
+from code.mapgenerator import MapGenerator
 
 if __name__ == "__main__":
     MG = MapGenerator()
