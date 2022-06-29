@@ -2,7 +2,7 @@
 
 This program generates a bitmap of your choice when entering a set of tiles. 
 <br><br>
-<p align="center"><img alt="Example" src="tiles/Result_example.png"></p>
+<p align="center"><img alt="Example" src="Data/tiles/Result_example.png"></p>
 <br><br>
 
 ### **Algorithm**
