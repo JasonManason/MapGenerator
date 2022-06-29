@@ -1,14 +1,13 @@
 import pygame, sys, random, tile, json, numpy as np
 from pygame.locals import *
 from itertools import product
-
 IMG_SIZE = 16
 
 class MapGenerator:
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.width, self.height = 320, 320 # 640, 640
+        self.size = self.width, self.height = 320, 320
         self.occupied_tiles = []
 
 
@@ -327,6 +326,7 @@ class MapGenerator:
         """
         common = []
         all = [list(dir) for dir in adjacent_options.values()]
+        all.append(options)
         flattened = [l for ll in all for l in ll]
 
         for elem in flattened:
@@ -347,6 +347,7 @@ class MapGenerator:
                 if(len(elem) > 1):
                     return False
         return True
+
 
     def reset(self, data: dict):
         """
@@ -384,19 +385,16 @@ class MapGenerator:
             Then a new tile object gets created and drawn in that spot.
             The grid gets updated and the process repeats until the wave is fully collapsed (the len of all options in the grid is equal to 1).
         """
+        n_tiles = int((self.width / 16) * (self.height / 16))
+        tiles_without_common = 0
         while not self.is_fully_collapsed():
-        #for i in range(200):
             options, (x, y) = self.get_min_entropy()
+            
             if (x, y) not in self.occupied_tiles:         
                 adjacent_options = self.check_adjacency(x, y, data)
                 name = self.find_common_option(options, adjacent_options)
 
-
                 if name != None:
-
-                    print((x, y))
-                    print(name)
-
                     up, down, left, right, lu, ru, ld, rd = self.get_valid_nbs(name, data)
                     next = tile.Tile(name, IMG_SIZE, IMG_SIZE, up, down, left, right, lu, ru, ld, rd)
                     next.set_coords((int(x * 16), int(y * 16)))
@@ -404,23 +402,17 @@ class MapGenerator:
                     self.draw_tile(next)
                     self.update_grid(next)
                     self.update_grid_around_tile(next, x, y)
-                else:                    
-                    print("no common options left, resetting:")
-                    #self.reset(data)
-                    #self.wave_function_collapse(data) # maximum recursion depth exceeded
-                    pass
 
+                elif tiles_without_common >= int(2 * n_tiles): 
+                    print("Too many tiles collapsed to 0.")
+                    break
+                  
+                print("No common options left.")
+                tiles_without_common += 1
+                pass
+
+                print(n_tiles - (len(self.occupied_tiles)), " open spots on the grid.")
                 print(len(self.occupied_tiles))
-
-        
-    def on_startup(self):
-        # EXTRA: draw a blended image of all options for every spot in grid?
-        pass
-    
-
-    def update_blend(self):
-        # EXTRA: change the blended image to options left for every spot in grid?
-        pass
 
 
     def on_cleanup(self):
@@ -437,7 +429,6 @@ class MapGenerator:
             self.running = False
         
         pygame.display.set_caption('MapGenerator')
-        self.on_startup()
         while(self.running ):
             for event in pygame.event.get():
                 self.on_event(event)
