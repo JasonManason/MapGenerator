@@ -19,7 +19,7 @@ class TestMapGenerator(unittest.TestCase):
 
     def test_get_valid_nbs(self):
         MG_test = mapgenerator.MapGenerator()
-        file = open('nb_rules.json')
+        file = open('Data/nb_rules.json')
         data = json.load(file)
         data = data["data"]    
         up =  ["grass0", "grass1", "grass2", "grass3", "flower", "tall_grass", "tree_cut", "path4", "path5", "path6", "water6", "water7", "water8"]

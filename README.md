@@ -2,7 +2,7 @@
 
 This program generates a bitmap of your choice when entering a set of tiles. 
 <br><br>
-<img src="tiles/Result_example.png" alt="Alt text" title="Example">
+<p align="center"><img alt="Example" src="tiles/Result_example.png"></p>
 <br><br>
 
 ### **Algorithm**
@@ -16,6 +16,12 @@ The algorithm is comparable to solving a sudoku. <br>
     <li>The program goes back to step 5, unless the entire grid has collapsed OR if the pattern results in impossible tiles, meaning; a cell without any possible sprites because of its adjacency rules.</li>
 </ol>
 
+<br>
 
 ### **Manual**
-In order to do this, you need a set of tiles of the same width and height. These can be placed in the tiles folder. The adjacency rules need to be edited in the json file "nb_rules.json" in the same way the current set of tiles is described. The eight adjacent neighbours need to be clarified for each tile.
+The repository can be imported as mapgenerator. The necessary libraries can be found in requirements.txt and are installable via: <br>
+```bash
+pip install -r requirements.txt
+```
+
+In order to change the tileset, you need a set of tiles of the same width and height. These can be placed in the tiles folder. The adjacency rules need to be edited in the json file `Data/nb_rules.json` in the same way the current set of tiles is described. The eight adjacent neighbours need to be clarified for each tile.

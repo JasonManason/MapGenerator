@@ -53,7 +53,7 @@ class MapGenerator:
         Takes in a tile object and draws its image at its given coordinates.
         :param t: A tile object
         """
-        self.display_surf.blit((pygame.image.load(f"tiles/{t.img_name}.png")), t.coords)
+        self.display_surf.blit((pygame.image.load(f"Data/tiles/{t.img_name}.png")), t.coords)
         pygame.display.update()
        
 
@@ -66,7 +66,7 @@ class MapGenerator:
         :param data_len: The amount of (key)items in the file
         :return: The json file as a dict and a list of the key items from data, together as a tuple
         """
-        file = open('nb_rules.json')
+        file = open('Data/nb_rules.json')
         data = json.load(file)
         file.close()
         self.data_len = len(data["data"])
